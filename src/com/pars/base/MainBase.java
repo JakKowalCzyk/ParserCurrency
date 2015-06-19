@@ -1,6 +1,7 @@
 package com.pars.base;
 
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MainBase {
         createTables();
     }
     public boolean createTables(){
-        String createEUR = "CREATE TABLE IF NOT EXISTS eur (id_eur INTEGER PRIMARY KEY, date OBJECT, value DOUBLE )";
+        String createEUR = "CREATE TABLE IF NOT EXISTS eur (id_eur INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
         try {
             statement.execute(createEUR);
         }
@@ -37,10 +38,11 @@ public class MainBase {
     }
     public boolean insertEUR(Double value, Date date) {
         try {
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             connection.setAutoCommit(true);
             String sql = "insert into eur values(null,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setObject(1, date);
+            preparedStatement.setDate(1, sqlDate);
             preparedStatement.setDouble(2, value);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -68,11 +70,29 @@ public class MainBase {
         }
         return euRbases;
     }
+     public boolean isExists() {
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM eur");
+            int id = resultSet.getInt("id_eur");
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public Date getDate(){
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM eur WHERE id_eur=(SELECT max(id_eur) FROM EUR)");
+            sthDate = resultSet.getDate("date");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ehe");
+        }
+        return sthDate;
+    }
     public void closeConnection(){
         try {
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -80,4 +100,5 @@ public class MainBase {
     private static final String DB_URL = "jdbc:sqlite:courses.db";
     private Connection connection;
     private Statement statement;
+    private Date sthDate;
 }
