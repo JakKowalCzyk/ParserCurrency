@@ -38,11 +38,8 @@ public class USDbase {
         this.value = value;
     }
     public String toString() {
-        return "USDbase {" +
-                "[" + id +
-                "] - " + date +
-                " " + value +
-                '}';
+        return  date +
+                "   " + value;
     }
 
     private int id;

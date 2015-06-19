@@ -37,11 +37,8 @@ public class GBPbase {
         this.value = value;
     }
     public String toString() {
-        return "GBPbase {[" +
-                + id +
-                "] - " + date +
-                " " + value +
-                '}';
+        return date +
+                "   " + value;
     }
 
     private int id;

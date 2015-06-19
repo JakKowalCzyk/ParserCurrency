@@ -38,11 +38,8 @@ public class CHFbase {
         this.value = value;
     }
     public String toString() {
-        return "CHFbase {[" +
-                + id +
-                "] - " + date +
-                " " + value +
-                '}';
+        return date +
+                "   " + value;
     }
     private int id;
     private Date date;

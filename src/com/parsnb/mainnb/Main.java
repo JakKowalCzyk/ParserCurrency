@@ -1,16 +1,16 @@
 package com.parsnb.mainnb;
 
-import com.pars.base.MakeBase;
-import com.parsenb.pars.Parser;
-import java.util.ArrayList;
-
+import javax.swing.*;
+import java.awt.*;
 public class Main {
-
     public static void main(String[] args) {
-        Parser parser = new Parser();
-        ArrayList<Double> courses;
-        courses = parser.setCourses();
-        MakeBase base = new MakeBase(courses);
-
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                CurrencyGui gui = new CurrencyGui();
+                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                gui.setVisible(true);
+            }
+        });
     }
 }

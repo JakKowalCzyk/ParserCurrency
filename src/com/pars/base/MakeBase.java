@@ -33,17 +33,36 @@ public class MakeBase {
             mainBase.insertCHF(values.get(2), date);
             mainBase.insertGBP(values.get(3), date);
         }
-        List<EURbase> euRbases = mainBase.selectEUR();
+        euRbases = mainBase.selectEUR();
         for (EURbase es : euRbases) System.out.println(es);
-        List<USDbase> usDbases = mainBase.selectUSD();
+        usDbases = mainBase.selectUSD();
         for (USDbase us : usDbases) System.out.println(us);
-        List<CHFbase> chFbases = mainBase.selectCHF();
+        chFbases = mainBase.selectCHF();
         for (CHFbase ch : chFbases) System.out.println(ch);
-        List<GBPbase> gbPbases = mainBase.selectGBP();
+        gbPbases = mainBase.selectGBP();
         for (GBPbase gb : gbPbases) System.out.println(gb);
 
         mainBase.closeConnection();
     }
+    public List<EURbase> getEur(){
+        return euRbases;
+    }
+    public List<USDbase> getUSD(){
+        return usDbases;
+    }
+
+    public List<GBPbase> getGbPbases() {
+        return gbPbases;
+    }
+
+    public List<CHFbase> getChFbases() {
+        return chFbases;
+    }
+
+    private List<EURbase> euRbases;
+    private List<USDbase> usDbases;
+    private List<CHFbase> chFbases;
+    private List<GBPbase> gbPbases;
     private ArrayList<Double> values;
     private Date date;
 }
