@@ -22,12 +22,17 @@ public class MakeBase {
             if (calBase.get(Calendar.YEAR) == calNow.get(Calendar.YEAR) && calBase.get(Calendar.DAY_OF_YEAR) == calNow.get(Calendar.DAY_OF_YEAR)) System.out.println();
             else {
                 mainBase.insertEUR(values.get(0), date);
+                mainBase.insertUSD(values.get(1), date);
             }
         }
-        else mainBase.insertEUR(values.get(0), date);
+        else {
+            mainBase.insertEUR(values.get(0), date);
+            mainBase.insertUSD(values.get(1), date);
+        }
         List<EURbase> euRbases = mainBase.selectEUR();
         for (EURbase es : euRbases) System.out.println(es);
-
+        List<USDbase> usDbases = mainBase.selectUSD();
+        for (USDbase us : usDbases) System.out.println(us);
         mainBase.closeConnection();
     }
     private ArrayList<Double> values;

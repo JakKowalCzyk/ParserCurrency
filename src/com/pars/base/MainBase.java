@@ -27,8 +27,10 @@ public class MainBase {
     }
     public boolean createTables(){
         String createEUR = "CREATE TABLE IF NOT EXISTS eur (id_eur INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
+        String createUSD = "CREATE TABLE IF NOT EXISTS usd (id_usd INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
         try {
             statement.execute(createEUR);
+            statement.execute(createUSD);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -46,6 +48,21 @@ public class MainBase {
             preparedStatement.setDouble(2, value);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean insertUSD(Double value, Date date){
+        try {
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            connection.setAutoCommit(true);
+            String sql = "insert into usd values(null,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setDouble(2, value);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
             e.printStackTrace();
             return false;
         }
@@ -70,6 +87,25 @@ public class MainBase {
         }
         return euRbases;
     }
+    public List<USDbase> selectUSD() {
+        List<USDbase> usDbases = new LinkedList<>();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM usd");
+            int id;
+            Double value;
+            Date date;
+            while (resultSet.next()) {
+                id = resultSet.getInt("id_usd");
+                date = resultSet.getDate("date");
+                value = resultSet.getDouble("value");
+                usDbases.add(new USDbase(id, value, date));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        return usDbases;
+    }
      public boolean isExists() {
         try {
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM eur");
@@ -85,15 +121,13 @@ public class MainBase {
             sthDate = resultSet.getDate("date");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("ehe");
         }
         return sthDate;
     }
     public void closeConnection(){
         try {
             connection.close();
-        } catch (SQLException e) {
-        }
+        } catch (SQLException e) {}
     }
 
     private static final String DRIVER = "org.sqlite.JDBC";

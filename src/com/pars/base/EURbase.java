@@ -35,7 +35,7 @@ public class EURbase {
         this.value = value;
     }
     public String toString(){
-        return "[" + id +"] - "+ date + " " + value;
+        return "EURbase {[" + id +"] - "+ date + " " + value +"}";
     }
 
     private Date date;
