@@ -28,9 +28,13 @@ public class MainBase {
     public boolean createTables(){
         String createEUR = "CREATE TABLE IF NOT EXISTS eur (id_eur INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
         String createUSD = "CREATE TABLE IF NOT EXISTS usd (id_usd INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
+        String createCHF = "CREATE TABLE IF NOT EXISTS chf (id_usd INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
+        String createGBP = "CREATE TABLE IF NOT EXISTS gbp (id_usd INTEGER PRIMARY KEY, date DATE, value DOUBLE )";
         try {
             statement.execute(createEUR);
             statement.execute(createUSD);
+            statement.execute(createCHF);
+            statement.execute(createGBP);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -58,6 +62,36 @@ public class MainBase {
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             connection.setAutoCommit(true);
             String sql = "insert into usd values(null,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setDouble(2, value);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean insertCHF(Double value, Date date){
+        try {
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            connection.setAutoCommit(true);
+            String sql = "insert into chf values(null,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setDouble(2, value);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean insertGBP(Double value, Date date){
+        try {
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            connection.setAutoCommit(true);
+            String sql = "insert into gbp values(null,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setDate(1, sqlDate);
             preparedStatement.setDouble(2, value);
@@ -105,6 +139,44 @@ public class MainBase {
             return null;
         }
         return usDbases;
+    }
+    public List<CHFbase> selectCHF() {
+        List<CHFbase> chFbases = new LinkedList<>();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM chf");
+            int id;
+            Double value;
+            Date date;
+            while (resultSet.next()) {
+                id = resultSet.getInt("id_usd");
+                date = resultSet.getDate("date");
+                value = resultSet.getDouble("value");
+                chFbases.add(new CHFbase(id, value, date));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        return chFbases;
+    }
+    public List<GBPbase> selectGBP() {
+        List<GBPbase> gbPbases = new LinkedList<>();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM gbp");
+            int id;
+            Double value;
+            Date date;
+            while (resultSet.next()) {
+                id = resultSet.getInt("id_usd");
+                date = resultSet.getDate("date");
+                value = resultSet.getDouble("value");
+                gbPbases.add(new GBPbase(date, value, id));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        return gbPbases;
     }
      public boolean isExists() {
         try {

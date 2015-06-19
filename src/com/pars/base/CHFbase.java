@@ -5,10 +5,10 @@ import java.util.Date;
 /**
  * Created by DK on 2015-06-19.
  */
-public class USDbase {
-    public USDbase() {
+public class CHFbase {
+    public CHFbase() {
     }
-    public USDbase(int id, double value, Date date) {
+    public CHFbase(int id, Double value, Date date) {
         this.date = date;
         this.id = id;
         this.value = value;
@@ -30,22 +30,21 @@ public class USDbase {
         this.id = id;
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
     public String toString() {
-        return "USDbase {" +
-                "[" + id +
+        return "CHFbase {[" +
+                + id +
                 "] - " + date +
                 " " + value +
                 '}';
     }
-
     private int id;
-    private double value;
     private Date date;
+    private Double value;
 }

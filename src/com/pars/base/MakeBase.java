@@ -23,16 +23,25 @@ public class MakeBase {
             else {
                 mainBase.insertEUR(values.get(0), date);
                 mainBase.insertUSD(values.get(1), date);
+                mainBase.insertCHF(values.get(2), date);
+                mainBase.insertGBP(values.get(3), date);
             }
         }
         else {
             mainBase.insertEUR(values.get(0), date);
             mainBase.insertUSD(values.get(1), date);
+            mainBase.insertCHF(values.get(2), date);
+            mainBase.insertGBP(values.get(3), date);
         }
         List<EURbase> euRbases = mainBase.selectEUR();
         for (EURbase es : euRbases) System.out.println(es);
         List<USDbase> usDbases = mainBase.selectUSD();
         for (USDbase us : usDbases) System.out.println(us);
+        List<CHFbase> chFbases = mainBase.selectCHF();
+        for (CHFbase ch : chFbases) System.out.println(ch);
+        List<GBPbase> gbPbases = mainBase.selectGBP();
+        for (GBPbase gb : gbPbases) System.out.println(gb);
+
         mainBase.closeConnection();
     }
     private ArrayList<Double> values;

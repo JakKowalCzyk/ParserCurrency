@@ -5,15 +5,14 @@ import java.util.Date;
 /**
  * Created by DK on 2015-06-19.
  */
-public class USDbase {
-    public USDbase() {
+public class GBPbase {
+    public GBPbase() {
     }
-    public USDbase(int id, double value, Date date) {
+    public GBPbase(Date date, double value, int id) {
         this.date = date;
-        this.id = id;
         this.value = value;
+        this.id = id;
     }
-
     public Date getDate() {
         return date;
     }
@@ -38,8 +37,8 @@ public class USDbase {
         this.value = value;
     }
     public String toString() {
-        return "USDbase {" +
-                "[" + id +
+        return "GBPbase {[" +
+                + id +
                 "] - " + date +
                 " " + value +
                 '}';
